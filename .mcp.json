@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "rag-mbti": {
+      "type": "stdio",
+      "command": ".venv/bin/python",
+      "args": [
+        "src/mcp_server.py"
+      ],
+      "env": {}
+    }
+  }
+}

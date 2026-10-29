@@ -1,0 +1,28 @@
+[
+    {"query": "кто такой дон кихот", "expected_ids": ["ile"], "tags": ["alias"]},
+    {"query": "расскажи про ENTP", "expected_ids": ["ile"], "tags": ["alias", "latin"]},
+    {"query": "что за тип ИЛИ", "expected_ids": ["ili"], "tags": ["alias"]},
+    {"query": "опиши Габена", "expected_ids": ["sli"], "tags": ["alias", "morphology"]},
+    {"query": "кто такой Джек Лондон", "expected_ids": ["lie"], "tags": ["alias"]},
+    {"query": "что известно про INFJ", "expected_ids": ["eii"], "tags": ["alias", "latin"]},
+    {"query": "расскажи про Максима Горького", "expected_ids": ["lsi"], "tags": ["alias", "morphology"]},
+    {"query": "кто такой Цезарь", "expected_ids": ["see"], "tags": ["alias"]},
+
+    {"query": "какой тип лучше всех прогнозирует будущее и скептичен", "expected_ids": ["ili"], "tags": ["description"]},
+    {"query": "кто создаёт уют и хорошее настроение, избегает конфликтов", "expected_ids": ["sei"], "tags": ["description"]},
+    {"query": "какой тип жёстко наводит порядок и следит за дисциплиной", "expected_ids": ["lsi"], "tags": ["description"]},
+    {"query": "кто быстро запускает бизнес и мыслит выгодой", "expected_ids": ["lie"], "tags": ["description"]},
+
+    {"query": "у кого болевая этика отношений", "expected_ids": ["ile", "sle"], "tags": ["function-slot", "multi"]},
+    {"query": "у кого болевая волевая сенсорика", "expected_ids": ["lii", "eii"], "tags": ["function-slot", "multi"]},
+    {"query": "у кого базовая деловая логика", "expected_ids": ["lie", "lse"], "tags": ["function-slot", "multi"]},
+    {"query": "у кого суггестивная интуиция возможностей", "expected_ids": ["sei", "sli"], "tags": ["function-slot", "multi"]},
+    {"query": "у кого творческая волевая сенсорика", "expected_ids": ["lsi", "esi"], "tags": ["function-slot", "multi"]},
+
+    {"query": "интуитивный логик экстраверт рационал", "expected_ids": ["lie"], "tags": ["structured"]},
+    {"query": "сенсорный этик интроверт иррационал", "expected_ids": ["sei"], "tags": ["structured"]},
+    {"query": "интуитивный этик экстраверт иррационал", "expected_ids": ["iee"], "tags": ["structured"]},
+
+    {"query": "кто входит в квадру Бета", "expected_ids": ["sle", "iei", "eie", "lsi"], "tags": ["quadra", "multi"]},
+    {"query": "какие типы в квадре Дельта", "expected_ids": ["iee", "sli", "lse", "eii"], "tags": ["quadra", "multi"]}
+]

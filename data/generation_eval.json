@@ -1,0 +1,17 @@
+[
+    {"question": "какая болевая функция у Дон Кихота?", "answerable": true},
+    {"question": "кто такой Цезарь?", "answerable": true},
+    {"question": "какие типы входят в квадру Дельта?", "answerable": true},
+    {"question": "у кого базовая деловая логика?", "answerable": true},
+    {"question": "что за творческая функция у Робеспьера?", "answerable": true},
+    {"question": "расскажи про Габена", "answerable": true},
+    {"question": "у кого болевая этика отношений?", "answerable": true},
+    {"question": "чем Штирлиц отличается от Джека Лондона?", "answerable": true},
+
+    {"question": "какие отношения между Гексли и Джеком Лондоном?", "answerable": false},
+    {"question": "кто основал соционику и в каком году?", "answerable": false},
+    {"question": "какой соционический тип у Илона Маска?", "answerable": false},
+    {"question": "сколько процентов людей в мире имеют тип Дон Кихот?", "answerable": false},
+    {"question": "что такое подтипы в соционике?", "answerable": false},
+    {"question": "какая зарплата у соционика?", "answerable": false}
+]
