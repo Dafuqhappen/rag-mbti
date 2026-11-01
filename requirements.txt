@@ -1,3 +1,5 @@
 chromadb
 python-telegram-bot>=21
 mcp>=2.2
+langgraph>=1.2
+langgraph-checkpoint-sqlite>=3.1

@@ -214,6 +214,45 @@ overlap, and a good semantic query ("a born orator") has BM25 = 0. Changing the
 tool description did not help and broke a neighbouring question — reverted.
 The defect is open.
 
+## The same loop on LangGraph
+
+`src/agent_graph.py` ports the agent loop to a LangGraph graph: nodes
+`model` / `tools` / `limit` with conditional edges, state with a reducer that
+appends messages. Everything else is the same — the MCP server, prompt, model,
+step limit and repair. `src/eval_agent_graph.py` runs both loops on the same 6
+control questions (qwen2.5-7b, temperature 0):
+
+| Orchestrator | Score | Model calls | Trajectories |
+|---|---|---|---|
+| own loop (`agent.py`) | 4/6 | 12 | — |
+| LangGraph (`agent_graph.py`) | 4/6 | 12 | identical to the own loop on all 6 questions |
+
+The failures are the same two — an incomplete plan (no card requested for one of
+the two compared types) and a type assigned to a real person — so they come from
+the model and the tools, not from the orchestrator.
+
+What the graph adds on top:
+
+- **Checkpointing.** After every node the state is written to SQLite. A process
+  crash before step 2 (`--crash-at 2`) followed by `--resume` on the same
+  `thread_id` took 1 + 1 model calls — exactly as without a crash; a restart from
+  scratch would repeat step 1, both the model call and the tool call.
+- **Interrupt (human in the loop).** With `--approve` the `tools` node stops the
+  graph and shows the planned calls; "yes" executes them, "no" makes the model
+  answer without them. One `interrupt()` per node and before any call: on resume
+  the node runs again from the start, so a pause between calls would repeat the
+  calls already made.
+
+What the graph does not do: it decides which step runs next, not how a step
+waits for the network. `src/asyncio_graph_demo.py`, 3 users, a 1 s "model call":
+
+| Step | Time | Event loop |
+|---|---|---|
+| plain function with `time.sleep` | 1.0 s | free — LangGraph runs sync steps in a thread |
+| **`async def` with `time.sleep` inside** | **3.0 s** | **blocked** |
+| `async def` + `asyncio.to_thread` | 1.0 s | free |
+| `async def` + `asyncio.sleep` | 1.0 s | free |
+
 ## asyncio: measurements
 
 | Demo | What it shows | Result |
@@ -260,6 +299,8 @@ ollama pull bge-m3 && ollama pull qwen2.5:7b
 
 # Python agent and agent evaluations
 .venv/bin/python src/agent.py
+.venv/bin/python src/agent_graph.py --approve "кто такой Цезарь?"
+.venv/bin/python src/eval_agent_graph.py
 .venv/bin/python src/eval_tool_design.py --orders
 .venv/bin/python src/eval_people.py
 
@@ -295,6 +336,9 @@ export TELEGRAM_BOT_TOKEN="..."
 | `eval_generation.py` | groundedness, citations and refusals |
 | `sweep.py` | fusion hyperparameter sweep |
 | `agent.py` | agent loop: repair of malformed calls, step limit |
+| `agent_graph.py` | the same loop as a LangGraph graph: checkpointing, interrupt |
+| `eval_agent_graph.py` | own loop vs LangGraph on the same control questions |
+| `asyncio_graph_demo.py` | what a graph does and does not do about a blocking step |
 | `eval_tool_design.py` | tool parameter shape: boolean vs enum, all orders |
 | `eval_people.py` | the agent and real people's names + counter-check on aliases |
 | `asyncio_demo.py`, `asyncio_limits_demo.py`, `checkpoint_demo.py`, `parallel_bench.py` | asyncio, limits, idempotency, concurrency measurements |
