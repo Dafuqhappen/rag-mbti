@@ -177,10 +177,11 @@ Decisions:
 - **`null` in arguments means "not set"**: small models write optional fields
   that way, and server schemas often reject `null`.
 
-On qwen2.5-7b: 3 of 6 control questions, with failures of three classes: wrong
-argument, incomplete plan, call printed as text. After porting the loop to
-TypeScript the classes repeated one for one: the failures come from the model
-and what it sees, not from the loop code.
+On qwen2.5-7b: 3 of 6 control questions before the tool-interface fix (see
+below; 4 of 6 after it), with failures of three classes: wrong argument,
+incomplete plan, call printed as text. After porting the loop to TypeScript the
+classes repeated one for one: the failures come from the model and what it sees,
+not from the loop code.
 
 ## Tool design: a measurement
 
